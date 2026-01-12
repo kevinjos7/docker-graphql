@@ -48,11 +48,11 @@ jobs:
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         docker build -t kjsaldana/docker-graphql:NEW_VERSION .
-        docker build -t kjsaldana/docker-graphql .
+        docker build -t kjsaldana/docker-graphql:latest .
                 
     - name: Push Docker Image
       env:
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         docker push kjsaldana/docker-graphql:$NEW_VERSION
-        docker push kjsaldana/docker-graphql
+        docker push kjsaldana/docker-graphql:latest
