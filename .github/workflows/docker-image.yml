@@ -16,9 +16,20 @@ jobs:
     # Nombre del paso -name
     - name: Checkout code
       uses: actions/checkout@v4
-      # Busqueda de historial de commit muy profundo
+      # Config, busqueda de historial de commit muy profundo
       with:
         fetch-depth: 0
+
+    # Control de la versión de app
+    - name: Git Semantic Version
+      # id global
+      id: version
+      uses: PaulHatch/semantic-version@v5.4.0
+      # Config, cambiar triggers
+      with:
+        major_pattern: "major:"
+        minor_pattern: "feat:"
+        version_format: "${major}.${minor}.${patch}"
         
     # Logarse en docker
     - name: Docker login
@@ -26,10 +37,14 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        # Seleccionar un paso "-", luego el id, luego output y version del action
+        NEW_VERSION: $ {{ setps.version.outputs.version }}
       # | Significa que cada línea se ejecuta independientemente
       run: |
         echo "Iniciando login"
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        echo $NEW_VERSION
+        
     # Construccion y subida a nube
     - name: Build Docker Image
       run: |
