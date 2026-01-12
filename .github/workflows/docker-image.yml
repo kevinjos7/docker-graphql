@@ -38,7 +38,7 @@ jobs:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         # Seleccionar un paso "-", luego el id, luego output y version del action
-        NEW_VERSION: ${{ setps.version.outputs.version }}
+        NEW_VERSION: ${{ steps.version.outputs.version }}
       # | Significa que cada línea se ejecuta independientemente
       run: |
         echo "Iniciando login"
