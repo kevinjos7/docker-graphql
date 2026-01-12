@@ -35,24 +35,24 @@ jobs:
     - name: Docker login
       # Crear variables de entorno
       env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        # Seleccionar un paso "-", luego el id, luego output y version del action
-        NEW_VERSION: ${{ steps.version.outputs.version }}
-      # | Significa que cada línea se ejecuta independientemente
+      # "|" Significa que cada línea se ejecuta independientemente
       run: | 
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         
     # Construccion y subida a nube
     - name: Build Docker Image
       env:
-        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        # Seleccionar un paso "-", luego el id, luego output y version del action
+        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         docker build -t kjsaldana/docker-graphql:$DOCKER_USER .
         docker build -t kjsaldana/docker-graphql .
                 
     - name: Push Docker Image
       env:
-        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         docker push kjsaldana/docker-graphql:$DOCKER_USER
         docker push kjsaldana/docker-graphql
