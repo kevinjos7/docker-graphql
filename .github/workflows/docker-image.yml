@@ -47,12 +47,12 @@ jobs:
         # Seleccionar un paso "-", luego el id, luego output y version del action
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-        docker build -t kjsaldana/docker-graphql:$DOCKER_USER .
+        docker build -t kjsaldana/docker-graphql:NEW_VERSION .
         docker build -t kjsaldana/docker-graphql .
                 
     - name: Push Docker Image
       env:
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-        docker push kjsaldana/docker-graphql:$DOCKER_USER
+        docker push kjsaldana/docker-graphql:$NEW_VERSION
         docker push kjsaldana/docker-graphql
