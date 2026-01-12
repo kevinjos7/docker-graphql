@@ -19,6 +19,7 @@ jobs:
       # Busqueda de historial de commit muy profundo
       with:
         fetch-depth: 0
+        
     # Logarse en docker
     - name: Docker login
       # Crear variables de entorno
@@ -29,7 +30,11 @@ jobs:
       run: |
         echo "Iniciando login"
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-
-        
-#    - name: Build the Docker image
-#      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    # Construccion y subida a nube
+    - name: Build Docker Image
+      run: |
+        docker build -t kjsaldana/docker-graphql:0.0.2 .
+                
+    - name: Push Docker Image
+      run: |
+        docker push kjsaldana/docker-graphql:0.0.2
