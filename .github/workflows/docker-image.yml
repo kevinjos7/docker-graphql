@@ -47,7 +47,7 @@ jobs:
         # Seleccionar un paso "-", luego el id, luego output y version del action
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-        docker build -t kjsaldana/docker-graphql:NEW_VERSION .
+        docker build -t kjsaldana/docker-graphql:$NEW_VERSION .
         docker build -t kjsaldana/docker-graphql:latest .
                 
     - name: Push Docker Image
