@@ -23,8 +23,8 @@ jobs:
     - name: Docker login
       # Crear variables de entorno
       env:
-        DOCKER_USER: ${{ DOCKER_USER }}
-        DOCKER_PASSWORD: ${{ DOCKER_PASSWORD }}
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       # | Significa que cada línea se ejecuta independientemente
       run: |
         echo "Iniciando login"
