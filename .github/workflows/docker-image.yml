@@ -39,7 +39,8 @@ jobs:
         # Seleccionar un paso "-", luego el id, luego output y version del action
         NEW_VERSION: ${{ steps.version.outputs.version }}
       # | Significa que cada línea se ejecuta independientemente
-      run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      run: | 
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         
     # Construccion y subida a nube
     - name: Build Docker Image
