@@ -13,6 +13,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    # Nombre del paso -name
+    - name: Checkout code
+      uses: actions/checkout@v4
+      # Busqueda de historial de commit muy profundo
+      with:
+        fetch-depth: 0
+    # Logarse en docker
+    - name: Docker login
+      # Crear variables de entorno
+      env:
+        DOCKER_USER: ${{DOCKER_USER}}
+        DOCKER_PASSWORD: ${{DOCKER_PASSWORD}}
+      # | Significa que cada línea se ejecuta independientemente
+      run: |
+        echo "Iniciando login"
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+        
+#    - name: Build the Docker image
+#      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
